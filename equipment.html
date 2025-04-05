@@ -178,5 +178,13 @@
     <footer>
       &copy; 1983 • The Umbra Initiative • Level VI Records Division
     </footer>
+    <script>
+      window.onload = () => {
+        if (!sessionStorage.getItem("auth_token")) {
+          alert("You must log in first!");
+          window.location.href = "/login.html"; // Redirect to login if no session
+        }
+      };
+    </script>
   </body>
 </html>
