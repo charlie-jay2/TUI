@@ -76,9 +76,40 @@
         margin-top: 1rem;
         font-size: 1rem;
       }
+
+      .glow {
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+
+      @keyframes glow {
+        from {
+          text-shadow: 0 0 5px #00ffcc66;
+        }
+        to {
+          text-shadow: 0 0 15px #00ffcc;
+        }
+      }
+
+      header {
+        position: absolute;
+        top: 2rem; /* Adjust the distance from the top */
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+      }
+
+      header h1 {
+        color: #01ff95;
+        text-shadow: 0 0 10px #00ffcc33;
+        font-size: 2.5rem;
+      }
     </style>
   </head>
   <body>
+    <header>
+      <h1 class="glow">The Umbra Initiative</h1>
+    </header>
+
     <div class="access-container">
       <h1>Access Code Verification</h1>
       <input
