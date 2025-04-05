@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - The Umbra Initiative</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cascadia+Code&display=swap"
+      rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Cascadia Code", monospace;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #0a0a0a;
+        color: #d0d0d0;
+        overflow-x: hidden;
+      }
+
+      header {
+        padding: 3rem 2rem 1rem;
+        text-align: center;
+        background: linear-gradient(to bottom, #0f0f0f, #0a0a0a);
+        border-bottom: 1px solid #1a1a1a;
+      }
+
+      header h1 {
+        font-size: 2.8rem;
+        color: #01ff95;
+        text-shadow: 0 0 10px #00ffcc33;
+      }
+
+      .login-container {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #111;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+
+      h2 {
+        font-size: 2rem;
+        color: #01ff95;
+        text-shadow: 0 0 10px #00ffcc33;
+        margin-bottom: 2rem;
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        border: 1px solid #444;
+        border-radius: 4px;
+        background-color: #222;
+        color: #ddd;
+        font-size: 1rem;
+        outline: none;
+      }
+
+      .input-field:focus {
+        border-color: #01ff95;
+      }
+
+      .login-btn {
+        width: 100%;
+        padding: 1rem;
+        background-color: #01ff95;
+        color: #0a0a0a;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .login-btn:hover {
+        background-color: #00dd80;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background-color: #0f0f0f;
+        color: #444;
+        border-top: 1px solid #1a1a1a;
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>The Umbra Initiative</h1>
+    </header>
+
+    <div class="login-container">
+      <h2>Login</h2>
+      <input
+        type="text"
+        id="email"
+        class="input-field"
+        placeholder="Email"
+        required />
+      <input
+        type="password"
+        id="password"
+        class="input-field"
+        placeholder="Password"
+        required />
+      <button id="login-btn" class="login-btn">Login</button>
+      <div id="error-message" style="color: red; display: none">
+        Invalid credentials. Please try again.
+      </div>
+    </div>
+
+    <footer>
+      &copy; 1983 • The Umbra Initiative • Division VII: Mission Control
+    </footer>
+
+    <script>
+      document
+        .getElementById("login-btn")
+        .addEventListener("click", async () => {
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const errorMessage = document.getElementById("error-message");
+
+          // Ensure both fields are filled out
+          if (!email || !password) {
+            errorMessage.textContent = "Please fill out all fields.";
+            errorMessage.style.display = "block";
+            return;
+          }
+
+          try {
+            const response = await fetch("/.netlify/functions/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.status === 200) {
+              // Store token in sessionStorage
+              sessionStorage.setItem("auth_token", data.token);
+              window.location.href = "/agents.html"; // Redirect to a dashboard or desired page
+            } else {
+              errorMessage.textContent =
+                data.message || "An error occurred. Please try again.";
+              errorMessage.style.display = "block";
+            }
+          } catch (error) {
+            console.error("Error during login:", error);
+            errorMessage.textContent =
+              "Error during login. Please try again later.";
+            errorMessage.style.display = "block";
+          }
+        });
+    </script>
+  </body>
+</html>

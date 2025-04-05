@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Access Control</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cascadia+Code&display=swap"
+      rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Cascadia Code", monospace;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #0a0a0a;
+        color: #d0d0d0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .access-container {
+        text-align: center;
+        padding: 2rem;
+        background: #1a1a1a;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+      }
+
+      h1 {
+        color: #01ff95;
+        text-shadow: 0 0 10px #00ffcc33;
+        font-size: 2.5rem;
+      }
+
+      .code-input {
+        margin: 1rem 0;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+        border: 2px solid #00ffcc;
+        border-radius: 4px;
+        width: 60%;
+        color: #00ffcc;
+        background: transparent;
+      }
+
+      .code-input:focus {
+        outline: none;
+        border-color: #01ff95;
+      }
+
+      .submit-btn {
+        margin-top: 1rem;
+        padding: 0.7rem 2rem;
+        background-color: #01ff95;
+        border: none;
+        color: #0a0a0a;
+        font-size: 1.1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      .submit-btn:hover {
+        background-color: #00ffcc;
+      }
+
+      .error-message {
+        color: #ff4d4d;
+        margin-top: 1rem;
+        font-size: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="access-container">
+      <h1>Access Code Verification</h1>
+      <input
+        type="text"
+        id="access-code"
+        class="code-input"
+        placeholder="Enter your 10-digit code"
+        maxlength="10" />
+      <button class="submit-btn" onclick="submitCode()">Submit</button>
+      <p id="error-message" class="error-message"></p>
+    </div>
+
+    <script>
+      async function submitCode() {
+        const accessCode = document.getElementById("access-code").value;
+        const errorMessage = document.getElementById("error-message");
+
+        // Validate the code format
+        if (!/^\d{10}$/.test(accessCode)) {
+          errorMessage.textContent = "Please enter a valid 10-digit code.";
+          return;
+        }
+
+        // Send the access code to the Netlify function
+        const response = await fetch("/.netlify/functions/access", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: accessCode }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Store in local storage for 24 hours if valid
+          const expiryTime = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+          localStorage.setItem("accessGranted", "true");
+          localStorage.setItem("accessExpiry", expiryTime);
+
+          // Redirect to home page
+          window.location.href = "/home.html";
+        } else {
+          errorMessage.textContent = "Invalid access code. Please try again.";
+        }
+      }
+    </script>
+  </body>
+</html>

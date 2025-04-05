@@ -1,0 +1,8 @@
+[build]
+  publish = "."  # This assumes your HTML file is in the root directory
+  command = ""
+
+[[redirects]]
+  from = "/"
+  to = "/access.html"
+  status = 200

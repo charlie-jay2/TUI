@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operations - The Umbra Initiative</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cascadia+Code&display=swap"
+      rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Cascadia Code", monospace;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #0a0a0a;
+        color: #d0d0d0;
+        overflow-x: hidden;
+      }
+
+      header {
+        padding: 3rem 2rem 1rem;
+        text-align: center;
+        background: linear-gradient(to bottom, #0f0f0f, #0a0a0a);
+        border-bottom: 1px solid #1a1a1a;
+      }
+
+      header h1 {
+        font-size: 2.8rem;
+        color: #01ff95;
+        text-shadow: 0 0 10px #00ffcc33;
+      }
+
+      main {
+        padding: 3rem 5%;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .operation {
+        background-color: #111;
+        border: 1px solid #222;
+        padding: 1.5rem;
+        border-radius: 6px;
+        box-shadow: 0 0 15px #00000033;
+        transition: 0.3s ease;
+      }
+
+      .operation h2 {
+        font-size: 1.3rem;
+        color: #01ff95;
+        margin-bottom: 0.5rem;
+      }
+
+      .operation p {
+        color: #ccc;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+      }
+
+      .open-btn {
+        background-color: #01ff95;
+        color: #0a0a0a;
+        border: none;
+        padding: 0.6rem 1rem;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .open-btn:hover {
+        background-color: #00dd80;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 99;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.85);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: #111;
+        border: 1px solid #444;
+        padding: 2rem;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 700px;
+        color: #ddd;
+        position: relative;
+        max-height: 80vh; /* Set max height for the modal */
+        overflow-y: auto; /* Enable vertical scrolling */
+      }
+
+      .modal-content h3 {
+        color: #01ff95;
+        margin-bottom: 0.5rem;
+      }
+
+      .modal-content p {
+        margin-bottom: 0.7rem;
+        line-height: 1.5;
+        font-size: 0.95rem;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 1.2rem;
+        background: none;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background-color: #0f0f0f;
+        color: #444;
+        border-top: 1px solid #1a1a1a;
+        margin-top: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Operations Division</h1>
+    </header>
+
+    <main>
+      <div class="grid">
+        <div class="operation">
+          <h2>Operation Phantom Wires</h2>
+          <p>Start: 23/04/2023 • End: 30/04/2023</p>
+          <button class="open-btn" onclick="openModal('phantomwires')">
+            Open
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal" id="phantomwires">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal('phantomwires')">
+          ✕
+        </button>
+        <h3>Operation Phantom Wires</h3>
+        <p><strong>Start:</strong> 23/04/2023</p>
+        <p><strong>End:</strong> 30/04/2023</p>
+        <p>
+          <strong>Transcript:</strong> <br />
+          Whiskey entered Lincoln's underground cyber world, identifying and
+          infiltrating a local marketplace for stolen personal data and
+          surveillance equipment. The agent’s dual approach of physical
+          infiltration and cyber tactics led to the discovery of key players and
+          their illicit activities. Wicks’ operations were uncovered, and
+          Whiskey neutralized any potential threats, ensuring that the
+          marketplace’s illegal transactions were disrupted. The data was
+          gathered with minimal exposure, and Whiskey executed the mission
+          without a trace of the agency’s involvement.
+        </p>
+
+        <p><strong>Full Transcript for the Operation:</strong></p>
+        <p>
+          <strong>Operation:</strong> Phantom Wires <br />
+          <strong>Agent:</strong> Whiskey (Codename) <br />
+          <strong>Dates:</strong> 23rd April 2023 - 30th April 2023
+        </p>
+        <p><strong>Day 1 (Sunday, 23rd April 2023):</strong></p>
+        <p>
+          <strong>Objective:</strong> Establish surveillance on local cyber
+          target.
+        </p>
+        <p>
+          Whiskey begins by identifying the key players in Lincoln's underground
+          cyber world. The initial task is to monitor a local encrypted dark web
+          marketplace that's been flagged for selling stolen personal
+          information. Whiskey traces a series of online transactions and
+          narrows down the location of the marketplace's server — it's housed in
+          a small, non-descript business center in the city.
+        </p>
+
+        <p><strong>Day 2 (Monday, 24th April 2023):</strong></p>
+        <p><strong>Objective:</strong> Infiltrate the physical location.</p>
+        <p>
+          Whiskey visits the business center, posing as a contracted IT
+          specialist. The agent gains access to the building’s server room,
+          where a small local network is running the cyber operation. No one
+          notices Whiskey's presence as the agent leaves a signal-jamming device
+          hidden in the room, temporarily disabling the network without alerting
+          any users. Whiskey retreats before the system comes back online.
+        </p>
+
+        <p><strong>Day 3 (Tuesday, 25th April 2023):</strong></p>
+        <p><strong>Objective:</strong> Neutralize digital security.</p>
+        <p>
+          With the server temporarily down, Whiskey infiltrates the network from
+          a safe distance, using a secure proxy to avoid detection. The agent
+          locates the source code for the marketplace and plants a backdoor,
+          allowing future access. At the same time, Whiskey gathers a list of
+          active users and their transactions, identifying key players involved
+          in the stolen data exchanges.
+        </p>
+
+        <p>
+          <strong
+            >Day 4-5 (Wednesday, 26th April 2023 - Thursday, 27th April
+            2023):</strong
+          >
+        </p>
+        <p>
+          <strong>Objective:</strong> Confirm key players' locations and
+          intentions.
+        </p>
+        <p>
+          Whiskey tracks down one of the prominent figures in the local market:
+          Graham Wicks, an unknown figure with connections to the illicit tech
+          world. The agent tailgates Wicks to an industrial park outside of
+          Lincoln, noting suspicious activity involving vehicle loads of
+          high-tech surveillance gear. Whiskey takes photographs and notes key
+          details of the operation. No physical confrontations occur, but the
+          information is invaluable.
+        </p>
+
+        <p><strong>Day 6 (Friday, 28th April 2023):</strong></p>
+        <p><strong>Objective:</strong> Infiltrate Wicks' location.</p>
+        <p>
+          Whiskey is tasked with infiltrating a warehouse where Wicks is
+          believed to store sensitive materials. The agent poses as an
+          unassuming delivery driver, and after some surveillance, gains access
+          to the site. Inside, Whiskey discovers crates of surveillance devices,
+          wiretaps, and high-grade software — all being prepared for shipment
+          overseas. Whiskey quietly takes photographs and gathers a shipment
+          manifest with the names of international buyers. No one sees the agent
+          slip in and out.
+        </p>
+
+        <p><strong>Day 7 (Saturday, 29th April 2023):</strong></p>
+        <p>
+          <strong>Objective:</strong> Exfiltrate the data, neutralize risks.
+        </p>
+        <p>
+          Armed with all gathered intelligence, Whiskey places a device to
+          disrupt Wicks’ incoming communications. The agent exits the warehouse
+          without detection. The next move is to clean up: Whiskey clears all
+          traces of digital interference and ensures the marketplace has no
+          links back to the agency. The data on the stolen tech and illegal
+          transactions is safely secured, ready for later analysis.
+        </p>
+
+        <p><strong>Day 8 (Sunday, 30th April 2023):</strong></p>
+        <p><strong>Objective:</strong> Finalize operation and disappear.</p>
+        <p>
+          The operation concludes. Whiskey successfully withdraws from the area
+          and ensures that all gathered data is transferred to a secure server.
+          The operation is deemed a success with minimal exposure and no
+          witnesses to the agent’s presence. The digital marketplace is left in
+          disarray, and the surveillance operation has been neutralized.
+        </p>
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2025 The Umbra Initiative. All rights reserved.</p>
+    </footer>
+
+    <script>
+      function openModal(operation) {
+        const modal = document.getElementById(operation);
+        modal.style.display = "flex";
+      }
+
+      function closeModal(operation) {
+        const modal = document.getElementById(operation);
+        modal.style.display = "none";
+      }
+
+      // Session check and validation
+      window.onload = () => {
+        if (!sessionStorage.getItem("auth_token")) {
+          alert("You must log in first!");
+          window.location.href = "/login.html"; // Redirect to login if no session
+        }
+      };
+    </script>
+  </body>
+</html>

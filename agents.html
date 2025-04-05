@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Database - The Umbra Initiative</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cascadia+Code&display=swap"
+      rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: "Cascadia Code", monospace;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #0a0a0a;
+        color: #d0d0d0;
+        overflow-x: hidden;
+      }
+
+      header {
+        padding: 3rem 2rem 1rem;
+        text-align: center;
+        background: linear-gradient(to bottom, #0f0f0f, #0a0a0a);
+        border-bottom: 1px solid #1a1a1a;
+      }
+
+      header h1 {
+        font-size: 2.8rem;
+        color: #01ff95;
+        text-shadow: 0 0 10px #00ffcc33;
+      }
+
+      header p {
+        color: #888;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      main {
+        padding: 3rem 10%;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        color: #01ff95;
+        margin-bottom: 1rem;
+      }
+
+      .search-bar {
+        margin-bottom: 2rem;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 0.75rem;
+        border: none;
+        background-color: #1a1a1a;
+        color: #00ffcc;
+        font-size: 1rem;
+        border-radius: 4px;
+        outline: none;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #111;
+        box-shadow: 0 0 15px #00000055;
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        border-bottom: 1px solid #222;
+        text-align: left;
+      }
+
+      th {
+        background-color: #0d0d0d;
+        color: #00ffcc;
+        font-weight: normal;
+      }
+
+      tr:hover {
+        background-color: #141414;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background-color: #0f0f0f;
+        color: #444;
+        border-top: 1px solid #1a1a1a;
+        margin-top: 3rem;
+      }
+
+      .go-to-operations {
+        width: 100%;
+        padding: 1rem;
+        background-color: #01ff95;
+        color: #0a0a0a;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 2rem;
+      }
+
+      .go-to-operations:hover {
+        background-color: #00dd80;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Agent Database</h1>
+      <p>Umbra Clearance Required</p>
+    </header>
+
+    <main>
+      <h2>Active Operatives</h2>
+      <div class="search-bar">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by codename or number..." />
+      </div>
+      <table id="agentTable">
+        <thead>
+          <tr>
+            <th>Codename</th>
+            <th>Agent Number</th>
+            <th>Rank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Whiskey</td>
+            <td>5823174</td>
+            <td>Black Tier</td>
+          </tr>
+          <tr>
+            <td>Daniels</td>
+            <td>4918630</td>
+            <td>Grey Tier</td>
+          </tr>
+          <tr>
+            <td>Ash</td>
+            <td>7481209</td>
+            <td>Red Tier</td>
+          </tr>
+          <tr>
+            <td>Bromine</td>
+            <td>2034987</td>
+            <td>Black Tier</td>
+          </tr>
+          <tr>
+            <td>Zero</td>
+            <td>0000001</td>
+            <td>Founder</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Button to navigate to operations -->
+      <button
+        class="go-to-operations"
+        onclick="window.location.href='operations.html'">
+        Go to Operations
+      </button>
+    </main>
+
+    <footer>
+      &copy; 1983 • The Umbra Initiative • Level VI Records Division
+    </footer>
+
+    <script>
+      // Session check and validation
+      window.onload = () => {
+        if (!sessionStorage.getItem("auth_token")) {
+          alert("You must log in first!");
+          window.location.href = "/login.html"; // Redirect to login if no session
+        }
+      };
+
+      // Search functionality for the agent table
+      const searchInput = document.getElementById("searchInput");
+      const table = document
+        .getElementById("agentTable")
+        .getElementsByTagName("tbody")[0];
+
+      searchInput.addEventListener("keyup", function () {
+        const filter = searchInput.value.toUpperCase();
+        const rows = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+          const codename = rows[i]
+            .getElementsByTagName("td")[0]
+            .textContent.toUpperCase();
+          const number = rows[i]
+            .getElementsByTagName("td")[1]
+            .textContent.toUpperCase();
+
+          if (codename.includes(filter) || number.includes(filter)) {
+            rows[i].style.display = "";
+          } else {
+            rows[i].style.display = "none";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
