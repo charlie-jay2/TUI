@@ -27,13 +27,22 @@
         text-align: center;
         background: linear-gradient(to bottom, #0f0f0f, #0a0a0a);
         border-bottom: 1px solid #1a1a1a;
+        display: flex;
+        align-items: center; /* Align logo and text vertically */
+        justify-content: center;
+      }
+
+      header .logo {
+        width: 120px; /* Adjust size */
+        margin-right: 2rem; /* Space between logo and text */
+        animation: spin 5s infinite ease-in-out; /* Continuous clockwise rotation */
       }
 
       header h1 {
         font-size: 3.2rem;
         color: #01ff95;
         text-shadow: 0 0 10px #00ffcc33;
-        margin-bottom: 0.5rem;
+        margin: 0; /* Remove margin for spacing */
       }
 
       .code-tagline {
@@ -87,13 +96,13 @@
       a {
         text-decoration: none;
         color: inherit;
-        cursor: default; /* Prevent cursor change */
+        cursor: url("./cursor.cur"), auto; /* Custom green dot cursor */
       }
 
       .txt {
         color: #444;
         text-decoration: none;
-        cursor: default;
+        cursor: url("./cursor.cur"), auto; /* Custom green dot cursor */
       }
 
       .glow {
@@ -108,15 +117,31 @@
           text-shadow: 0 0 15px #00ffcc;
         }
       }
+
+      /* Logo spinning animation (clockwise only) */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
   <body>
     <header>
-      <h1 class="glow">The Umbra Initiative</h1>
-      <p class="code-tagline">
-        [ AUTHORIZED ACCESS ONLY • CLASSIFIED LEVEL VI ]
-      </p>
-      <p>Established in silence. Operating beyond light.</p>
+      <img
+        src="./assets/TUI Logo.png"
+        alt="The Umbra Initiative Logo"
+        class="logo" />
+      <div>
+        <h1 class="glow">The Umbra Initiative</h1>
+        <p class="code-tagline">
+          [ AUTHORIZED ACCESS ONLY • CLASSIFIED LEVEL VI ]
+        </p>
+        <p>Established in silence. Operating beyond light.</p>
+      </div>
     </header>
 
     <section class="mission">
