@@ -181,7 +181,6 @@
     <script>
       window.onload = () => {
         if (!sessionStorage.getItem("auth_token")) {
-          alert("You must log in first!");
           window.location.href = "/login.html"; // Redirect to login if no session
         }
       };

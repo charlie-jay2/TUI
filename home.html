@@ -176,7 +176,6 @@
 
     // Check if the session is valid (24 hours window)
     if (!accessGranted || Date.now() > accessExpiry) {
-      // Redirect back to access.html if the session is invalid
       window.location.href = "/access.html";
     }
   </script>
