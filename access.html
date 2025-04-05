@@ -23,6 +23,25 @@
         align-items: center;
         height: 100vh;
         overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Block Mobile Access */
+      .mobile-block {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0);
+        color: #01ff95;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5rem;
+        padding: 2rem;
+        z-index: 9999;
       }
 
       .access-container {
@@ -110,7 +129,16 @@
       <h1 class="glow">The Umbra Initiative</h1>
     </header>
 
-    <div class="access-container">
+    <!-- Block for mobile users -->
+    <div id="mobileBlock" class="mobile-block" style="display: none">
+      <p class="glow">
+        This site is no longer available for mobile. Use an iPad/Tablet, Laptop,
+        or Personal Computer to initiate your access.
+      </p>
+    </div>
+
+    <!-- Access control container -->
+    <div id="accessContainer" class="access-container">
       <h1>Access Code Verification</h1>
       <input
         type="text"
@@ -123,6 +151,19 @@
     </div>
 
     <script>
+      // Check if the user is on a mobile device based on width
+      function isMobileDevice() {
+        return window.innerWidth <= 768;
+      }
+
+      // Show block if it's a mobile device
+      if (isMobileDevice()) {
+        document.getElementById("mobileBlock").style.display = "flex";
+        document.getElementById("accessContainer").style.display = "none";
+      } else {
+        document.getElementById("mobileBlock").style.display = "none";
+      }
+
       async function submitCode() {
         const accessCode = document.getElementById("access-code").value;
         const errorMessage = document.getElementById("error-message");
