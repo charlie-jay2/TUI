@@ -37,7 +37,7 @@
       .login-container {
         width: 100%;
         max-width: 400px;
-        margin: 0 auto;
+        margin: 3rem auto;
         padding: 2rem;
         background-color: #111;
         border-radius: 8px;
@@ -85,6 +85,12 @@
         background-color: #00dd80;
       }
 
+      #error-message {
+        color: red;
+        display: none;
+        margin-top: 1rem;
+      }
+
       footer {
         text-align: center;
         padding: 2rem;
@@ -102,22 +108,22 @@
 
     <div class="login-container">
       <h2>Login</h2>
-      <input
-        type="text"
-        id="email"
-        class="input-field"
-        placeholder="Email"
-        required />
-      <input
-        type="password"
-        id="password"
-        class="input-field"
-        placeholder="Password"
-        required />
-      <button id="login-btn" class="login-btn">Login</button>
-      <div id="error-message" style="color: red; display: none">
-        Invalid credentials. Please try again.
-      </div>
+      <form id="login-form">
+        <input
+          type="text"
+          id="email"
+          class="input-field"
+          placeholder="Agent ID"
+          required />
+        <input
+          type="password"
+          id="password"
+          class="input-field"
+          placeholder="Password"
+          required />
+        <button type="submit" class="login-btn">Login</button>
+        <div id="error-message"></div>
+      </form>
     </div>
 
     <footer>
@@ -126,18 +132,13 @@
 
     <script>
       document
-        .getElementById("login-btn")
-        .addEventListener("click", async () => {
+        .getElementById("login-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
           const email = document.getElementById("email").value;
           const password = document.getElementById("password").value;
           const errorMessage = document.getElementById("error-message");
-
-          // Ensure both fields are filled out
-          if (!email || !password) {
-            errorMessage.textContent = "Please fill out all fields.";
-            errorMessage.style.display = "block";
-            return;
-          }
 
           try {
             const response = await fetch("/.netlify/functions/login", {
@@ -151,18 +152,14 @@
             const data = await response.json();
 
             if (response.status === 200) {
-              // Store token in sessionStorage
               sessionStorage.setItem("auth_token", data.token);
-              window.location.href = "/agents.html"; // Redirect to a dashboard or desired page
+              window.location.href = "/agents.html";
             } else {
-              errorMessage.textContent =
-                data.message || "An error occurred. Please try again.";
+              errorMessage.textContent = data.message || "Invalid credentials.";
               errorMessage.style.display = "block";
             }
           } catch (error) {
-            console.error("Error during login:", error);
-            errorMessage.textContent =
-              "Error during login. Please try again later.";
+            errorMessage.textContent = "Login failed. Please try again later.";
             errorMessage.style.display = "block";
           }
         });
