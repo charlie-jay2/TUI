@@ -54,7 +54,9 @@
         margin-bottom: 2rem;
       }
 
-      input[type="text"] {
+      input[type="text"],
+      input[type="email"],
+      textarea {
         width: 100%;
         padding: 0.75rem;
         border: none;
@@ -63,6 +65,11 @@
         font-size: 1rem;
         border-radius: 4px;
         outline: none;
+        margin-bottom: 1rem;
+      }
+
+      textarea {
+        resize: vertical;
       }
 
       table {
@@ -99,7 +106,8 @@
       }
 
       .go-to-operations,
-      .go-to-equipment {
+      .go-to-equipment,
+      .submit-form-button {
         width: 100%;
         padding: 1rem;
         background-color: #01ff95;
@@ -110,12 +118,47 @@
         border-radius: 6px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        margin-top: 2rem;
+        margin-top: 1rem;
       }
 
       .go-to-operations:hover,
-      .go-to-equipment:hover {
+      .go-to-equipment:hover,
+      .submit-form-button:hover {
         background-color: #00dd80;
+      }
+
+      .contact-form {
+        margin: 4rem auto 2rem;
+        max-width: 600px;
+        background-color: #111;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 0 20px #00000044;
+      }
+
+      .contact-form h2 {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .form-response {
+        margin-top: 1rem;
+        padding: 1rem;
+        text-align: center;
+        border-radius: 6px;
+        font-weight: bold;
+      }
+
+      .form-success {
+        color: #01ff95;
+        background-color: #003320;
+        border: 1px solid #00dd80;
+      }
+
+      .form-error {
+        color: #ff4b4b;
+        background-color: #331111;
+        border: 1px solid #aa2222;
       }
     </style>
   </head>
@@ -170,19 +213,65 @@
         </tbody>
       </table>
 
-      <!-- Button to navigate to operations -->
+      <!-- Navigation Buttons -->
       <button
         class="go-to-operations"
         onclick="window.location.href='operations.html'">
         Go to Operations
       </button>
-
-      <!-- Button to navigate to equipment -->
       <button
         class="go-to-equipment"
         onclick="window.location.href='equipment.html'">
         Go to Equipment
       </button>
+
+      <!-- Contact Form with JavaScript handler -->
+      <div class="contact-form">
+        <h2>Umbra Initiatve Contact</h2>
+        <form
+          id="secureForm"
+          name="contact"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden>
+            <label>Don’t fill this out: <input name="bot-field" /></label>
+          </p>
+
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name (Required)"
+            required />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email (Required)"
+            required />
+
+          <input
+            type="text"
+            name="agent"
+            placeholder="Agent Number (Optional)" />
+
+          <textarea
+            name="message"
+            placeholder="Encrypted Message"
+            rows="6"
+            required></textarea>
+
+          <button type="submit" class="submit-form-button">
+            Send Secure Message
+          </button>
+
+          <div
+            id="formResponse"
+            class="form-response"
+            style="display: none"></div>
+        </form>
+      </div>
     </main>
 
     <footer>
@@ -190,14 +279,14 @@
     </footer>
 
     <script>
-      // Session check and validation
+      // Session check
       window.onload = () => {
         if (!sessionStorage.getItem("auth_token")) {
-          window.location.href = "/login.html"; // Redirect to login if no session
+          window.location.href = "/login.html";
         }
       };
 
-      // Search functionality for the agent table
+      // Table search
       const searchInput = document.getElementById("searchInput");
       const table = document
         .getElementById("agentTable")
@@ -215,11 +304,42 @@
             .getElementsByTagName("td")[1]
             .textContent.toUpperCase();
 
-          if (codename.includes(filter) || number.includes(filter)) {
-            rows[i].style.display = "";
+          rows[i].style.display =
+            codename.includes(filter) || number.includes(filter) ? "" : "none";
+        }
+      });
+
+      // Handle form submission with AJAX
+      const form = document.getElementById("secureForm");
+      const responseDiv = document.getElementById("formResponse");
+
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const encodedData = new URLSearchParams(formData).toString();
+
+        try {
+          const res = await fetch("/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: encodedData,
+          });
+
+          if (res.ok) {
+            responseDiv.textContent = "Message sent successfully.";
+            responseDiv.className = "form-response form-success";
+            responseDiv.style.display = "block";
+            form.reset();
           } else {
-            rows[i].style.display = "none";
+            throw new Error("Form submission failed");
           }
+        } catch (error) {
+          responseDiv.textContent = "There was an error sending your message.";
+          responseDiv.className = "form-response form-error";
+          responseDiv.style.display = "block";
         }
       });
     </script>
